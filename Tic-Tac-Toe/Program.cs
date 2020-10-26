@@ -7,6 +7,7 @@ namespace Tic_Tac_Toe
         static void Main(string[] args)
         {
             Console.WriteLine("cunt");
+            Console.WriteLine("no u.");
         }
     }
 }
