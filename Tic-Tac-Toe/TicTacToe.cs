@@ -145,5 +145,45 @@ namespace Tic_Tac_Toe
                 return 'f'; // F in the chat
             }
         }
+
+        public void SetValue(int row, int column, int value)
+        {
+            if (row > 0 && row < 3 && column > 0 && column < 3)
+            {
+                Console.WriteLine("Impossible row or column.");
+                return;
+            }
+            if ( value != 0 || value != 1)
+            {
+                Console.WriteLine("You can't insert anything else but O or X.");
+                Console.WriteLine("( 0 -> O | 1 -> X )");
+                return;
+            }
+
+            // Jeżeli się tutaj dostaliśmy to wszystko powinno być w porządku i możemy ustawić wartość
+            board[row][column] = value;
+        }
+        public void SetChar(int row, int column, char c)
+        {
+            if (row > 0 && row < 3 && column > 0 && column < 3)
+            {
+                Console.WriteLine("Impossible row or column.");
+                return;
+            }
+            string letter = c.ToString().ToLower();
+            if (letter != "x" || letter != "o")
+            {
+                Console.WriteLine("You can't insert anything else but O or X.");
+                Console.WriteLine("( 0 -> O | 1 -> X )");
+                return;
+            }
+
+            // Jeżeli się tutaj dostaliśmy to wszystko powinno być w porządku i możemy ustawić wartość
+            int value = new int();
+            if (letter == "x") value = 1;
+            if (letter == "o") value = 0;
+
+            board[row][column] = value;
+        }
     }
 }
