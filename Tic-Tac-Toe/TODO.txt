@@ -1,0 +1,11 @@
+﻿TODO LIST:
+
+- input system
+- funkcja wstawiająca legalny znak do boardu
+- funkcja oceniająca moc ruchu (możemy oceniać też moc gracza)
+- game loop
+- AI
+
+
+Tutaj wszystko co nam wpadnie do głowy, że trzeba zrobić
+Będzie łatwo kontynuować.
