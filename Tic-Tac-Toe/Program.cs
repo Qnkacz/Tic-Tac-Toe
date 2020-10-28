@@ -6,11 +6,11 @@ namespace Tic_Tac_Toe
     {
         static void Main(string[] args)
         {
-            TicTacToe t1 = new TicTacToe();
+            GameManager GM = new GameManager(false);
 
             Console.WriteLine("TIC TAC TOE\n");
 
-            t1.Display();
+            GM.Display();
         }
     }
 }
