@@ -143,7 +143,7 @@ namespace Tic_Tac_Toe
 
         public void SetValue(int row, int column, int value)
         {
-            if (row > 0 && row < 3 && column > 0 && column < 3)
+            if (row < 0 && row > 3 && column < 0 && column > 3)
             {
                 Console.WriteLine("Impossible row or column.");
                 return;
@@ -160,7 +160,7 @@ namespace Tic_Tac_Toe
         }
         public void SetChar(int row, int column, char c)
         {
-            if (row > 0 && row < 3 && column > 0 && column < 3)
+            if (row < 0 && row > 3 && column < 0 && column > 3)
             {
                 Console.WriteLine("Impossible row or column.");
                 return;
@@ -196,6 +196,18 @@ namespace Tic_Tac_Toe
                 }
             }
             return false;
+        }
+        //sprawdzanie czy konkretne miejsce jest wolne
+        public bool CanPlace(int x, int y)
+        {
+            if (board[x-1][y-1] == 2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

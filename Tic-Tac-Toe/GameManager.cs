@@ -45,53 +45,57 @@ namespace Tic_Tac_Toe
         /// jest to funkcja, która zbiera input od fizycznego gracza
         /// </summary>
         /// <returns></returns>
-        public int[] PlayerInput()
+        public void PlayerInput()
         {
             // Interfejs do wprowadzenia ruchu
-
             ConsoleKeyInfo key;
             string _val = string.Empty;
             int x = -1;
             int y = -1;
-            Console.WriteLine("Wpisz wartość kolumny, gdzie chcesz wstawić znak");
-            //loop która gwarantuje żeby była wprowadzona liczba
             do
             {
-                key = Console.ReadKey(true); //wprowadzamy klawisz
-                if (possibleInputs.Contains(key.Key)) //jezeli nie jest to backspace to działamy
+                Console.WriteLine("Wpisz wartość kolumny, gdzie chcesz wstawić znak");
+                //loop która gwarantuje żeby była wprowadzona liczba
+                do
                 {
-                    double val = 0;
-                    bool _x = double.TryParse(key.KeyChar.ToString(), out val);
-                    if (_x)
+                    key = Console.ReadKey(true); //wprowadzamy klawisz
+                    if (possibleInputs.Contains(key.Key)) //jezeli nie jest to backspace to działamy
                     {
-                        _val += key.KeyChar;
-                        x = Convert.ToInt32(_val);
-                        Console.WriteLine(x);
+                        double val = 0;
+                        bool _x = double.TryParse(key.KeyChar.ToString(), out val);
+                        if (_x)
+                        {
+                            _val += key.KeyChar;
+                            x = Convert.ToInt32(_val);
+                            Console.WriteLine(x);
+                        }
                     }
                 }
-            }
-            while (x == -1);
-            Console.WriteLine("Wpisz wartość wiersza, gdzie chcesz wstawić znak");
-            //powtarzamy dla wiersza
-            _val = string.Empty;
-            do
-            {
-                key = Console.ReadKey(true); //wprowadzamy klawisz
-                if (possibleInputs.Contains(key.Key)) //jezeli nie jest to backspace to działamy
+                while (x == -1);
+                Console.WriteLine("Wpisz wartość wiersza, gdzie chcesz wstawić znak");
+                //powtarzamy dla wiersza
+                _val = string.Empty;
+                do
                 {
-                    double val = 0;
-                    bool _x = double.TryParse(key.KeyChar.ToString(), out val);
-                    if (_x)
+                    key = Console.ReadKey(true); //wprowadzamy klawisz
+                    if (possibleInputs.Contains(key.Key)) //jezeli nie jest to backspace to działamy
                     {
-                        _val += key.KeyChar;
-                        y = Convert.ToInt32(_val);
-                        Console.WriteLine(y);
+                        double val = 0;
+                        bool _x = double.TryParse(key.KeyChar.ToString(), out val);
+                        if (_x)
+                        {
+                            _val += key.KeyChar;
+                            y = Convert.ToInt32(_val);
+                            Console.WriteLine(y);
+                        }
                     }
                 }
-            }
-            while (y == -1);
-            int[] arr = new int[] { x, y };
-            return arr;
+                while (y == -1);
+            } while (!board.CanPlace(x, y));
+
+            
+            board.SetChar(x, y,'x');
+            board.Display();
         }
 
         public void Display()
@@ -113,7 +117,7 @@ namespace Tic_Tac_Toe
                     break;
             }
         }
-        
+
         ///TODO
         //gameloop
         public void Gameloop()
