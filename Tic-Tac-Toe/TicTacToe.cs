@@ -143,12 +143,13 @@ namespace Tic_Tac_Toe
 
         public void SetValue(int row, int column, int value)
         {
+            int[] goodValues = new int[] { 0, 1 };
             if (row < 0 && row > 3 && column < 0 && column > 3)
             {
                 Console.WriteLine("Impossible row or column.");
                 return;
             }
-            if ( value != 0 || value != 1)
+            if ( !goodValues.Contains(value))
             {
                 Console.WriteLine("You can't insert anything else but O or X.");
                 Console.WriteLine("( 0 -> O | 1 -> X )");
@@ -160,13 +161,13 @@ namespace Tic_Tac_Toe
         }
         public void SetChar(int row, int column, char c)
         {
+            char[] goodValues = new char[] { 'o', 'x' };
             if (row < 0 && row > 3 && column < 0 && column > 3)
             {
                 Console.WriteLine("Impossible row or column.");
                 return;
             }
-            string letter = c.ToString().ToLower();
-            if (letter != "x" || letter != "o")
+            if (!goodValues.Contains(Char.ToLower(c)))
             {
                 Console.WriteLine("You can't insert anything else but O or X.");
                 Console.WriteLine("( 0 -> O | 1 -> X )");
@@ -175,8 +176,8 @@ namespace Tic_Tac_Toe
 
             // Jeżeli się tutaj dostaliśmy to wszystko powinno być w porządku i możemy ustawić wartość
             int value = new int();
-            if (letter == "x") value = 1;
-            if (letter == "o") value = 0;
+            if (c == 'x') value = 1;
+            if (c == 'o') value = 0;
 
             board[row][column] = value;
         }

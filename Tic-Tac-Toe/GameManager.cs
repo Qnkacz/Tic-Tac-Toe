@@ -93,8 +93,8 @@ namespace Tic_Tac_Toe
                 while (y == -1);
             } while (!board.CanPlace(x, y));
 
-            
-            board.SetChar(x, y,'x');
+
+            board.SetChar(x, y, 'x');
             board.Display();
         }
 
