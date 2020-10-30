@@ -1,10 +1,12 @@
 ﻿TODO LIST:
 
-- input system
+- input system:
+	- input AI
 - funkcja oceniająca moc ruchu (możemy oceniać też moc gracza)
 - game loop
 - AI
 - ai nalezy do klasy tictactoe czy gamemanager czy robimy klase ai ktora otrzymuje board i zwraca decyzje?
+	-osobna klasa AI wydaje sie byc sensowna
 
 
 Tutaj wszystko co nam wpadnie do głowy, że trzeba zrobić

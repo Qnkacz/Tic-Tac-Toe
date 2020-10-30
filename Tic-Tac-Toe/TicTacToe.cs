@@ -48,7 +48,6 @@ namespace Tic_Tac_Toe
                             break;
                         default:
                             throw new System.ArgumentException("Parameter other than [0,2]. ERROR!");
-                            break;
                     }
                 }
                 Console.WriteLine("█");
@@ -126,17 +125,13 @@ namespace Tic_Tac_Toe
                 {
                     case 2:
                         return '.';
-                        break;
                     case 1:
                         return 'x';
-                        break;
                     case 0:
                         return 'o';
-                        break;
                     default:
-                        throw new System.ArgumentException("Something weird happened. ERROR!");
                         return 'f';
-                        break;
+                        
                 }
             }
             else
@@ -184,6 +179,23 @@ namespace Tic_Tac_Toe
             if (letter == "o") value = 0;
 
             board[row][column] = value;
+        }
+
+        //funckja sprawdzajaca czy jest wolne miejsce na planszy
+        public bool IsPlaceAvaible()
+        {
+
+            for (int i = 0; i < board.Count; i++)
+            {
+                for (int j = 0; j < board[i].Count; j++)
+                {
+                    if (board[i][j] == 2)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }

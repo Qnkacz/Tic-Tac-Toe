@@ -11,6 +11,7 @@ namespace Tic_Tac_Toe
             Console.WriteLine("TIC TAC TOE\n");
 
             GM.Display();
+            GM.PlayerInput();
         }
     }
 }

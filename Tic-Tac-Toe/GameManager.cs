@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Tic_Tac_Toe
@@ -8,6 +9,15 @@ namespace Tic_Tac_Toe
     {
         private bool ourTurn = new bool();
         TicTacToe board = new TicTacToe();
+        ConsoleKey[] possibleInputs = new ConsoleKey[]
+        {
+                ConsoleKey.D1,
+                ConsoleKey.D2,
+                ConsoleKey.D3,
+                ConsoleKey.NumPad1,
+                ConsoleKey.NumPad2,
+                ConsoleKey.NumPad3
+        };
 
         public GameManager(bool weFirst = true)
         {
@@ -18,7 +28,7 @@ namespace Tic_Tac_Toe
         public void ExecuteTurn()
         {
             /// DO ZROBIENIA
-            switch(ourTurn)
+            switch (ourTurn)
             {
                 // Tura gracza
                 case true:
@@ -31,11 +41,57 @@ namespace Tic_Tac_Toe
                     break;
             }
         }
-
-        public void PlayerInput()
+        /// <summary>
+        /// jest to funkcja, która zbiera input od fizycznego gracza
+        /// </summary>
+        /// <returns></returns>
+        public int[] PlayerInput()
         {
-            /// DO ZROBIENIA
             // Interfejs do wprowadzenia ruchu
+
+            ConsoleKeyInfo key;
+            string _val = string.Empty;
+            int x = -1;
+            int y = -1;
+            Console.WriteLine("Wpisz wartość kolumny, gdzie chcesz wstawić znak");
+            //loop która gwarantuje żeby była wprowadzona liczba
+            do
+            {
+                key = Console.ReadKey(true); //wprowadzamy klawisz
+                if (possibleInputs.Contains(key.Key)) //jezeli nie jest to backspace to działamy
+                {
+                    double val = 0;
+                    bool _x = double.TryParse(key.KeyChar.ToString(), out val);
+                    if (_x)
+                    {
+                        _val += key.KeyChar;
+                        x = Convert.ToInt32(_val);
+                        Console.WriteLine(x);
+                    }
+                }
+            }
+            while (x == -1);
+            Console.WriteLine("Wpisz wartość wiersza, gdzie chcesz wstawić znak");
+            //powtarzamy dla wiersza
+            _val = string.Empty;
+            do
+            {
+                key = Console.ReadKey(true); //wprowadzamy klawisz
+                if (possibleInputs.Contains(key.Key)) //jezeli nie jest to backspace to działamy
+                {
+                    double val = 0;
+                    bool _x = double.TryParse(key.KeyChar.ToString(), out val);
+                    if (_x)
+                    {
+                        _val += key.KeyChar;
+                        y = Convert.ToInt32(_val);
+                        Console.WriteLine(y);
+                    }
+                }
+            }
+            while (y == -1);
+            int[] arr = new int[] { x, y };
+            return arr;
         }
 
         public void Display()
@@ -46,7 +102,7 @@ namespace Tic_Tac_Toe
         public void ShowWhoseTurn()
         {
             // Wypisuje czyja jest tura. Chyba tylko do konstruktora
-            switch(ourTurn)
+            switch (ourTurn)
             {
                 case true:
                     Console.WriteLine("TURA GRACZA");
@@ -55,6 +111,16 @@ namespace Tic_Tac_Toe
                 case false:
                     Console.WriteLine("TURA AI");
                     break;
+            }
+        }
+        
+        ///TODO
+        //gameloop
+        public void Gameloop()
+        {
+            while (board.IsPlaceAvaible() == true)
+            {
+                //gamellop
             }
         }
     }
