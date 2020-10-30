@@ -11,3 +11,7 @@
 
 Tutaj wszystko co nam wpadnie do głowy, że trzeba zrobić
 Będzie łatwo kontynuować.
+
+Player --- value ---char
+human		  1       x
+AI            0       o

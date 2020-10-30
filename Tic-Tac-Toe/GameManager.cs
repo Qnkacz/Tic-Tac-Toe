@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.CompilerServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,12 +33,16 @@ namespace Tic_Tac_Toe
             {
                 // Tura gracza
                 case true:
-                    // COS
+                    //char is x
+                    //sprawdzanie czy mozna
+                    //sprawdzanie czy wygranko
                     break;
 
                 // Tura komputera
                 case false:
-                    // COS
+                    //char is o
+                    //sprawdzanie czy mozna
+                    //sprawdzanie czy wygranbkjo
                     break;
             }
         }
@@ -127,5 +132,7 @@ namespace Tic_Tac_Toe
                 //gamellop
             }
         }
+
+        //
     }
 }
