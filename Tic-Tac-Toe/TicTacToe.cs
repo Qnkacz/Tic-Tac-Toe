@@ -11,18 +11,19 @@ namespace Tic_Tac_Toe
         // 2 - Brak wstawionego znaku
         // 0 - 0 - kółko
         // 1 - X - iks
-        private List<List<int>> board = new List<List<int>>();
+        private int[,] board = new int [3,3];
         
         public TicTacToe()
         {
             /// Tworzymy listę list i wypełniamy ją 2kami
             int filler = 2;
-            int[] blanks = { filler, filler, filler }; // linia
-            List<int> line = blanks.ToList();
 
             for (int i = 0; i < 3; i++)
             {
-                board.Add(line); // trzykrotnie wstawiamy puste linie
+                for (int j = 0; j < 3; j++)
+                {
+                    board[i,j] = filler;
+                }
             }
         }
 
@@ -35,7 +36,7 @@ namespace Tic_Tac_Toe
                 Console.Write("█");
                 for (int j = 0; j < 3; j++)
                 {
-                    switch(board[i][j])
+                    switch(board[i,j])
                     {
                         case 2:
                             Console.Write("  ");
@@ -61,9 +62,9 @@ namespace Tic_Tac_Toe
             //           w przeciwnym wypadku zwraca listę wartości w kolumnie
             if (columnNumber > 0 && columnNumber < 3)
             {
-                int[] values = {    board[0][columnNumber],
-                                    board[1][columnNumber],
-                                    board[2][columnNumber]};
+                int[] values = {    board[0,columnNumber],
+                                    board[1,columnNumber],
+                                    board[2,columnNumber]};
 
                 return values.ToList();
             }
@@ -80,9 +81,9 @@ namespace Tic_Tac_Toe
             //           w przeciwnym wypadku zwraca listę wartości w wierszu
             if (rowNumber > 0 && rowNumber < 3)
             {
-                int[] values = {    board[rowNumber][0],
-                                    board[rowNumber][1],
-                                    board[rowNumber][2]};
+                int[] values = {    board[rowNumber,0],
+                                    board[rowNumber,1],
+                                    board[rowNumber,2]};
 
                 return values.ToList();
             }
@@ -103,7 +104,7 @@ namespace Tic_Tac_Toe
             // 1 - X - iks
             if (row > 0 && row < 3 && column > 0 && column < 3)
             {
-                return board[row][column];
+                return board[row,column];
             }
             else
             {
@@ -121,7 +122,7 @@ namespace Tic_Tac_Toe
             // x - X - iks
             if (row > 0 && row < 3 && column > 0 && column < 3)
             {
-                switch (board[row][column])
+                switch (board[row,column])
                 {
                     case 2:
                         return '.';
@@ -157,7 +158,7 @@ namespace Tic_Tac_Toe
             }
 
             // Jeżeli się tutaj dostaliśmy to wszystko powinno być w porządku i możemy ustawić wartość
-            board[row][column] = value;
+            board[row,column] = value;
         }
         public void SetChar(int row, int column, char c)
         {
@@ -179,18 +180,18 @@ namespace Tic_Tac_Toe
             if (c == 'x') value = 1;
             if (c == 'o') value = 0;
 
-            board[row][column] = value;
+            board[row-1,column-1] = value;
         }
 
         //funckja sprawdzajaca czy jest wolne miejsce na planszy
         public bool IsPlaceAvaible()
         {
 
-            for (int i = 0; i < board.Count; i++)
+            for (int i = 0; i < board.GetUpperBound(0); i++)
             {
-                for (int j = 0; j < board[i].Count; j++)
+                for (int j = 0; j < board.GetUpperBound(1); j++)
                 {
-                    if (board[i][j] == 2)
+                    if (board[i,j] == 2)
                     {
                         return true;
                     }
@@ -201,7 +202,7 @@ namespace Tic_Tac_Toe
         //sprawdzanie czy konkretne miejsce jest wolne
         public bool CanPlace(int x, int y)
         {
-            if (board[x-1][y-1] == 2)
+            if (board[x-1,y-1] == 2)
             {
                 return true;
             }
