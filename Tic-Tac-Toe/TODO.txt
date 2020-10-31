@@ -1,10 +1,7 @@
 ﻿TODO LIST:
 
-- input system:
-	- input AI
-- funkcja oceniająca moc ruchu (możemy oceniać też moc gracza)
+
 - game loop
-- AI
 
 
 Tutaj wszystko co nam wpadnie do głowy, że trzeba zrobić
