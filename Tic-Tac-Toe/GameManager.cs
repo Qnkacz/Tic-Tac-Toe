@@ -122,17 +122,23 @@ namespace Tic_Tac_Toe
                     break;
             }
         }
+        
 
         ///TODO
         //gameloop
         public void Gameloop()
         {
-            while (board.IsPlaceAvaible() == true)
+            do
             {
-                //gamellop
-            }
-        }
 
-        //
+            }
+            while (board.IsPlaceAvaible() == true && board.ChechWhoWon() != 2);
+            
+        }
+        //tutaj zaprogramowałem output AI
+        public void AI_Turn()
+        {
+            
+        }
     }
 }

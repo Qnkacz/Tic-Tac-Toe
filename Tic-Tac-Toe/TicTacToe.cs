@@ -11,8 +11,14 @@ namespace Tic_Tac_Toe
         // 2 - Brak wstawionego znaku
         // 0 - 0 - kółko
         // 1 - X - iks
-        private int[,] board = new int [3,3];
-        
+        public int[,] board = new int [3,3];
+        int[,] magicSquare = new int[3, 3]
+            {
+                { 8,1,6},
+                {3,5,7 },
+                {4,9,2 }
+            };
+
         public TicTacToe()
         {
             /// Tworzymy listę list i wypełniamy ją 2kami
@@ -26,7 +32,6 @@ namespace Tic_Tac_Toe
                 }
             }
         }
-
         public void Display() // Rysuje stan gry w konsoli
         {
             string bars = "████████";
@@ -210,6 +215,78 @@ namespace Tic_Tac_Toe
             {
                 return false;
             }
+        }
+        // sprawdza wygranego za pomocą magic square
+        // https://mathworld.wolfram.com/MagicSquare.html
+        //returns 0 if AI won
+        //return 1 if human won
+        //return 2 if no winner
+        public int ChechWhoWon()
+        {
+            
+            int AI_Value = 0;
+            int Human_Value = 0;
+            for (int i = 0; i < board.GetUpperBound(0); i++)
+            {
+                for (int j = 0; j < board.GetUpperBound(1); j++)
+                {
+                    if (board[i, j] == 1)
+                    {
+                        Human_Value += magicSquare[i, j];
+                    }
+                    if (board[i, j] == 0)
+                    {
+                        AI_Value += magicSquare[i, j];
+                    }
+                }
+            }
+            if (AI_Value >= 15)
+            {
+                return 0;
+            }
+            else if (Human_Value >= 15)
+            {
+                return 1;
+            }
+            else
+            {
+                return 2;
+            }
+        }
+        //oddaje tablice [x,y] z koordynatami na najlepszy ruch
+        //musisz wprowadzic dla kogo jest liczone
+        //1-dla gracza
+        //0-dla AI
+        public Tuple<int,int> GetBestPlaceFor(int player)
+        {
+            Dictionary<Tuple<int,int>, int> RankingOfChoices = new Dictionary<Tuple<int, int>, int>();
+            for (int i = 0; i < board.GetUpperBound(0); i++)
+            {
+                for (int j = 0; j < board.GetUpperBound(1); j++)
+                {
+                    if (board[i, j] == 2) //znalazło wolne miejsce
+                    {
+                        int value = 0; //mamy value danego miejsca
+                        var col = GetColumn(j).ToArray();
+                        var row = GetRow(i).ToArray();
+                        
+                        for (int x = 0; x < col.Length; x++) //dodajemy vbalue w zaleznosci od kolumny
+                        {
+                            if (col[x] == player) value += 10;
+                        }
+                        for (int x = 0; x < row.Length; x++) //dodajemy value w zaleznosci od wiersza
+                        {
+                            if (row[x] == player) value += 10;
+                        }
+
+                        Tuple<int, int> place = new Tuple<int, int>(i, j);
+                        RankingOfChoices.Add(place, value);
+                    }
+                }
+            }
+            var sortedDict = RankingOfChoices.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+            RankingOfChoices = sortedDict;
+            return RankingOfChoices.Keys.First();
         }
     }
 }
