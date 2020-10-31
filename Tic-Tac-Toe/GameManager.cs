@@ -8,6 +8,7 @@ namespace Tic_Tac_Toe
 {
     class GameManager
     {
+        int aiTurnCounter = 0;
         private bool ourTurn = new bool();
         TicTacToe board = new TicTacToe();
         ConsoleKey[] possibleInputs = new ConsoleKey[]
@@ -138,6 +139,40 @@ namespace Tic_Tac_Toe
         //tutaj zaprogramowałem output AI
         public void AI_Turn()
         {
+            if (aiTurnCounter == 0)
+            {
+                FirstAITurn();
+            }
+            else
+            {
+               var place = board.GetBestPlaceFor(0);
+                if (board.CanPlace(place.Item1, place.Item2))
+                {
+                    board.SetChar(place.Item1, place.Item2, 'o');
+                }
+            }
+        }
+        public void FirstAITurn()
+        {
+            Random r = new Random();
+            List<Tuple<int, int>> listofAvaiblePlaces = new List<Tuple<int, int>>();
+            for (int i = 0; i < board.board.GetUpperBound(0); i++)
+            {
+                for (int j = 0; j < board.board.GetUpperBound(1); j++)
+                {
+                    if (board.board[i, j] == 2)
+                    {
+                        Tuple<int, int> place = new Tuple<int, int>(i, j);
+                        listofAvaiblePlaces.Add(place);
+                    }
+                }
+            }
+            int randIndex = r.Next(0, listofAvaiblePlaces.Count);
+            Tuple<int, int> thePlace = new Tuple<int, int>(listofAvaiblePlaces[randIndex].Item1, listofAvaiblePlaces[randIndex].Item2);
+            if(board.CanPlace(thePlace.Item1, thePlace.Item2) == true)
+            {
+                board.SetChar(thePlace.Item1, thePlace.Item2, 'o');
+            }
             
         }
     }
