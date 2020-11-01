@@ -11,7 +11,7 @@ namespace Tic_Tac_Toe
         // 2 - Brak wstawionego znaku
         // 0 - 0 - kółko
         // 1 - X - iks
-        public int[,] board = new int [3,3];
+        public int[,] board = new int[3, 3];
         int[,] magicSquare = new int[3, 3]
             {
                 { 8,1,6},
@@ -28,7 +28,7 @@ namespace Tic_Tac_Toe
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    board[i,j] = filler;
+                    board[i, j] = filler;
                 }
             }
         }
@@ -41,7 +41,7 @@ namespace Tic_Tac_Toe
                 Console.Write("█");
                 for (int j = 0; j < 3; j++)
                 {
-                    switch(board[i,j])
+                    switch (board[i, j])
                     {
                         case 2:
                             Console.Write("  ");
@@ -109,7 +109,7 @@ namespace Tic_Tac_Toe
             // 1 - X - iks
             if (row > 0 && row < 3 && column > 0 && column < 3)
             {
-                return board[row,column];
+                return board[row, column];
             }
             else
             {
@@ -127,7 +127,7 @@ namespace Tic_Tac_Toe
             // x - X - iks
             if (row > 0 && row < 3 && column > 0 && column < 3)
             {
-                switch (board[row,column])
+                switch (board[row, column])
                 {
                     case 2:
                         return '.';
@@ -137,7 +137,7 @@ namespace Tic_Tac_Toe
                         return 'o';
                     default:
                         return 'f';
-                        
+
                 }
             }
             else
@@ -155,7 +155,7 @@ namespace Tic_Tac_Toe
                 Console.WriteLine("Impossible row or column.");
                 return;
             }
-            if ( !goodValues.Contains(value))
+            if (!goodValues.Contains(value))
             {
                 Console.WriteLine("You can't insert anything else but O or X.");
                 Console.WriteLine("( 0 -> O | 1 -> X )");
@@ -163,7 +163,7 @@ namespace Tic_Tac_Toe
             }
 
             // Jeżeli się tutaj dostaliśmy to wszystko powinno być w porządku i możemy ustawić wartość
-            board[row,column] = value;
+            board[row, column] = value;
         }
         public void SetChar(int row, int column, char c)
         {
@@ -185,7 +185,7 @@ namespace Tic_Tac_Toe
             if (c == 'x') value = 1;
             if (c == 'o') value = 0;
 
-            board[row,column] = value;
+            board[row, column] = value;
         }
 
         //funckja sprawdzajaca czy jest wolne miejsce na planszy
@@ -196,7 +196,7 @@ namespace Tic_Tac_Toe
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    if (board[i,j] == 2)
+                    if (board[i, j] == 2)
                     {
                         //Console.WriteLine("i: "+i+" j: "+j+" value: "+board[i,j]);
                         return true;
@@ -209,7 +209,7 @@ namespace Tic_Tac_Toe
         //sprawdzanie czy konkretne miejsce jest wolne
         public bool CanPlace(int x, int y)
         {
-            if (board[x,y] == 2) // zmiana z board[x-1,y-1] bo w GetBestPlace zwracasz indeksy boardu
+            if (board[x, y] == 2) // zmiana z board[x-1,y-1] bo w GetBestPlace zwracasz indeksy boardu
             {
                 return true;
             }
@@ -225,7 +225,7 @@ namespace Tic_Tac_Toe
         //return 2 if no winner
         public int ChechWhoWon()
         {
-            
+
             int AI_Value = 0;
             int Human_Value = 0;
             for (int i = 0; i < board.GetUpperBound(0); i++)
@@ -261,9 +261,9 @@ namespace Tic_Tac_Toe
         //musisz wprowadzic dla kogo jest liczone
         //1-dla gracza
         //0-dla AI
-        public Tuple<int,int> GetBestPlaceFor(int player)
+        public Tuple<int, int> GetBestPlaceFor(int player)
         {
-            Dictionary<Tuple<int,int>, int> RankingOfChoices = new Dictionary<Tuple<int, int>, int>();
+            Dictionary<Tuple<int, int>, int> RankingOfChoices = new Dictionary<Tuple<int, int>, int>();
             for (int i = 0; i < board.GetUpperBound(0); i++)
             {
                 for (int j = 0; j < board.GetUpperBound(1); j++)
@@ -273,7 +273,7 @@ namespace Tic_Tac_Toe
                         int value = 0; //mamy value danego miejsca
                         var row = GetRow(i).ToArray();
                         var col = GetColumn(j).ToArray();
-                        
+
                         for (int x = 0; x < col.Length; x++) //dodajemy value w zaleznosci od kolumny
                         {
                             if (col[x] == player) value += 10;
@@ -291,7 +291,15 @@ namespace Tic_Tac_Toe
             }
             var sortedDict = RankingOfChoices.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
             RankingOfChoices = sortedDict;
-            return RankingOfChoices.Keys.First();
+            if (RankingOfChoices.Keys.Count == 0)
+            {
+                throw new SystemException("Nie znalazłem najlepszego ruchu, wyjebałem się");
+            }
+            else
+            {
+
+                return RankingOfChoices.Keys.First();
+            }
         }
     }
 }
