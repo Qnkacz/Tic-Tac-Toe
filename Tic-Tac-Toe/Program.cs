@@ -6,6 +6,7 @@ namespace Tic_Tac_Toe
     {
         static void Main(string[] args)
         {
+            Console.WindowWidth -= 50;
             // Mam nadzieje ze sie nie wysypalo pls
             GameManager GM = new GameManager(true);
 

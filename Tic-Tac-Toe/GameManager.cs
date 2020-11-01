@@ -9,8 +9,6 @@ namespace Tic_Tac_Toe
     class GameManager
     {
         int aiTurnCounter = 0;
-        private int humanSign;
-        private int aiSign;
 
         private bool ourTurn = new bool();
         TicTacToe board = new TicTacToe();
@@ -28,31 +26,8 @@ namespace Tic_Tac_Toe
         {
             ourTurn = weFirst;
             ShowWhoseTurn();
-
-            humanSign = 1;
-            aiSign = 0;
         }
 
-        public void ExecuteTurn()
-        {
-            /// DO ZROBIENIA
-            switch (ourTurn)
-            {
-                // Tura gracza
-                case true:
-                    //char is x
-                    //sprawdzanie czy mozna
-                    //sprawdzanie czy wygranko
-                    break;
-
-                // Tura komputera
-                case false:
-                    //char is o
-                    //sprawdzanie czy mozna
-                    //sprawdzanie czy wygranbkjo
-                    break;
-            }
-        }
         /// <summary>
         /// jest to funkcja, która zbiera input od fizycznego gracza
         /// </summary>
@@ -163,7 +138,7 @@ namespace Tic_Tac_Toe
             
         }
         //tutaj zaprogramowałem output AI
-        public void AI_Turn()
+        public void AI_Turn(int sign = 0)
         {
             if (aiTurnCounter == 0)
             {
@@ -172,7 +147,7 @@ namespace Tic_Tac_Toe
             }
             else
             {
-               var place = board.GetBestPlaceFor(0); // zwraca indeksy tablicy
+               var place = board.GetBestPlaceFor(sign); // zwraca indeksy tablicy
                 if (board.CanPlace(place.Item1, place.Item2))
                 {
                     board.SetChar(place.Item1, place.Item2, 'o');

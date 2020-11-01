@@ -320,7 +320,6 @@ namespace Tic_Tac_Toe
             }
             else
             {
-
                 return RankingOfChoices.Keys.First();
             }
         }
