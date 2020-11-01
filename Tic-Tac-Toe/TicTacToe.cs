@@ -228,9 +228,9 @@ namespace Tic_Tac_Toe
 
             int AI_Value = 0;
             int Human_Value = 0;
-            for (int i = 0; i < board.GetUpperBound(0)+1; i++)
+            for (int i = 0; i < board.GetUpperBound(0); i++)
             {
-                for (int j = 0; j < board.GetUpperBound(1)+1; j++)
+                for (int j = 0; j < board.GetUpperBound(1); j++)
                 {
                     if (board[i, j] == 1)
                     {
@@ -242,17 +242,14 @@ namespace Tic_Tac_Toe
                     }
                 }
             }
-            Console.WriteLine("AI: " + AI_Value);
-            Console.WriteLine("Gracz: " + Human_Value);
             if (AI_Value >= 15)
             {
-                Console.WriteLine("Wygrala sztuczna inteligencja!");
-                
+                Console.WriteLine("Wygral gracz!");
                 return 0;
             }
             else if (Human_Value >= 15)
             {
-                Console.WriteLine("Wygral gracz!");
+                Console.WriteLine("Wygrala sztuczna inteligencja!");
                 return 1;
             }
             else
