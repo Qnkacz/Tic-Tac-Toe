@@ -222,52 +222,58 @@ namespace Tic_Tac_Toe
                 return false;
             }
         }
-        // sprawdza wygranego za pomocą magic square
-        // https://mathworld.wolfram.com/MagicSquare.html
         //returns 0 if AI won
         //return 1 if human won
         //return 2 if no winner
         public int ChechWhoWon()
         {
-
-            int AI_Value = 0;
-            int Human_Value = 0;
-            for (int i = 0; i < board.GetUpperBound(0)+1; i++)
+            //wiersze i kiolumny
+            for (int i = 0; i < 3; i++)
             {
-                for (int j = 0; j < board.GetUpperBound(1)+1; j++)
+                if(board[i,0]==1&& board[i, 1]==1&&board[i, 2] == 1)
                 {
-                    if (board[i, j] == 1)
-                    {
-                        Human_Value += magicSquare[i, j];
-                    }
-                    if (board[i, j] == 0)
-                    {
-                        AI_Value += magicSquare[i, j];
-                    }
+                    //Console.WriteLine("Wygrał ");
+                    
+                    return 1;
+                }
+                else if(board[0,i]==1 && board[1,i]==1 && board[2, i] == 1)
+                {
+                    //Console.WriteLine("kolumny gracz");
+                    return 1;
                 }
             }
-            Console.WriteLine("AI: " + AI_Value);
-            Console.WriteLine("Gracz: " + Human_Value);
-            if (AI_Value >= 15)
+            //skoksy
+            if (board[0, 0] == 1 && board[1, 1] == 1 && board[2, 2] == 1)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Wygrala sztuczna inteligencja!");
-                Console.ResetColor();
-                
-                return 0;
-            }
-            else if (Human_Value >= 15)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Wygral gracz!");
-                Console.ResetColor();
-
                 return 1;
             }
-            else
+            if (board[0, 2] == 1 && board[1, 1] == 1 && board[2, 0] == 1)
             {
-                return 2;
+                return 1;
             }
+            for (int i = 0; i < 3; i++)
+            {
+                if (board[i, 0] == 0 && board[i, 1] == 0 && board[i, 2] == 0)
+                {
+                    //Console.WriteLine("kolumny AI");
+                    return 0;
+                }
+                else if (board[0, i] == 0 && board[1, i] == 0 && board[2, i] == 0)
+                {
+                    //Console.WriteLine("w AI");
+                    return 0;
+                }
+            }
+            //skoksy
+            if (board[0, 0] == 0 && board[1, 1] == 0 && board[2, 2] == 0)
+            {
+                return 0;
+            }
+            if (board[0, 2] == 0 && board[1, 1] == 0 && board[2, 0] == 0)
+            {
+                return 0;
+            }
+            return 2;
         }
         //oddaje tablice [x,y] z koordynatami na najlepszy ruch
         //musisz wprowadzic dla kogo jest liczone
