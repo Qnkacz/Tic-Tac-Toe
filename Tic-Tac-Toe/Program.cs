@@ -6,12 +6,15 @@ namespace Tic_Tac_Toe
     {
         static void Main(string[] args)
         {
-            GameManager GM = new GameManager(false);
+            GameManager GM = new GameManager(true);
 
             Console.WriteLine("TIC TAC TOE\n");
 
-            GM.Display();
-            GM.PlayerInput();
+            //GM.Display();
+
+            GM.Gameloop();
+            //GM.AI_Turn();
+
         }
     }
 }

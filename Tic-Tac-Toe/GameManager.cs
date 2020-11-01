@@ -9,6 +9,9 @@ namespace Tic_Tac_Toe
     class GameManager
     {
         int aiTurnCounter = 0;
+        private int humanSign;
+        private int aiSign;
+
         private bool ourTurn = new bool();
         TicTacToe board = new TicTacToe();
         ConsoleKey[] possibleInputs = new ConsoleKey[]
@@ -25,6 +28,9 @@ namespace Tic_Tac_Toe
         {
             ourTurn = weFirst;
             ShowWhoseTurn();
+
+            humanSign = 1;
+            aiSign = 0;
         }
 
         public void ExecuteTurn()
@@ -60,7 +66,7 @@ namespace Tic_Tac_Toe
             int y = -1;
             do
             {
-                Console.WriteLine("Wpisz wartość kolumny, gdzie chcesz wstawić znak");
+                Console.WriteLine("Wpisz wartość wiersza, gdzie chcesz wstawić znak");
                 //loop która gwarantuje żeby była wprowadzona liczba
                 do
                 {
@@ -78,7 +84,7 @@ namespace Tic_Tac_Toe
                     }
                 }
                 while (x == -1);
-                Console.WriteLine("Wpisz wartość wiersza, gdzie chcesz wstawić znak");
+                Console.WriteLine("Wpisz wartość kolumny, gdzie chcesz wstawić znak");
                 //powtarzamy dla wiersza
                 _val = string.Empty;
                 do
@@ -97,11 +103,10 @@ namespace Tic_Tac_Toe
                     }
                 }
                 while (y == -1);
-            } while (!board.CanPlace(x, y));
+            } while (!board.CanPlace(x-1, y-1));
 
 
-            board.SetChar(x, y, 'x');
-            board.Display();
+            board.SetChar(x-1, y-1, 'x');
         }
 
         public void Display()
@@ -131,9 +136,27 @@ namespace Tic_Tac_Toe
         {
             do
             {
+                switch (ourTurn)
+                {
+                    // Tura gracza
+                    case true:
+                        ShowWhoseTurn();
+                        PlayerInput();
+                        EndTurn();
+                        Display();
+                        break;
 
+                    // Tura AI
+                    case false:
+                        ShowWhoseTurn();
+                        AI_Turn();
+                        EndTurn();
+                        Display();
+                        break;
+                }
             }
-            while (board.IsPlaceAvaible() == true && board.ChechWhoWon() != 2);
+            while (board.IsPlaceAvaible() == true && board.ChechWhoWon() == 2);
+            // powtarzaj dopoki są wolne miejsca i nikt jeszcze nie wygrał
             
         }
         //tutaj zaprogramowałem output AI
@@ -145,7 +168,7 @@ namespace Tic_Tac_Toe
             }
             else
             {
-               var place = board.GetBestPlaceFor(0);
+               var place = board.GetBestPlaceFor(0); // zwraca indeksy tablicy
                 if (board.CanPlace(place.Item1, place.Item2))
                 {
                     board.SetChar(place.Item1, place.Item2, 'o');
@@ -174,6 +197,11 @@ namespace Tic_Tac_Toe
                 board.SetChar(thePlace.Item1, thePlace.Item2, 'o');
             }
             
+        }
+
+        private void EndTurn()
+        {
+            ourTurn = !ourTurn;
         }
     }
 }

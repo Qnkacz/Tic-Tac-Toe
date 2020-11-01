@@ -58,7 +58,7 @@ namespace Tic_Tac_Toe
                 }
                 Console.WriteLine("█");
             }
-            Console.Write(bars);
+            Console.WriteLine(bars);
         }
 
         public List<int> GetColumn(int columnNumber)
@@ -185,7 +185,7 @@ namespace Tic_Tac_Toe
             if (c == 'x') value = 1;
             if (c == 'o') value = 0;
 
-            board[row-1,column-1] = value;
+            board[row,column] = value;
         }
 
         //funckja sprawdzajaca czy jest wolne miejsce na planszy
@@ -207,7 +207,7 @@ namespace Tic_Tac_Toe
         //sprawdzanie czy konkretne miejsce jest wolne
         public bool CanPlace(int x, int y)
         {
-            if (board[x-1,y-1] == 2)
+            if (board[x,y] == 2) // zmiana z board[x-1,y-1] bo w GetBestPlace zwracasz indeksy boardu
             {
                 return true;
             }
@@ -242,10 +242,12 @@ namespace Tic_Tac_Toe
             }
             if (AI_Value >= 15)
             {
+                Console.WriteLine("Wygral gracz!");
                 return 0;
             }
             else if (Human_Value >= 15)
             {
+                Console.WriteLine("Wygrala sztuczna inteligencja!");
                 return 1;
             }
             else
@@ -267,10 +269,10 @@ namespace Tic_Tac_Toe
                     if (board[i, j] == 2) //znalazło wolne miejsce
                     {
                         int value = 0; //mamy value danego miejsca
-                        var col = GetColumn(j).ToArray();
                         var row = GetRow(i).ToArray();
+                        var col = GetColumn(j).ToArray();
                         
-                        for (int x = 0; x < col.Length; x++) //dodajemy vbalue w zaleznosci od kolumny
+                        for (int x = 0; x < col.Length; x++) //dodajemy value w zaleznosci od kolumny
                         {
                             if (col[x] == player) value += 10;
                         }
@@ -278,6 +280,7 @@ namespace Tic_Tac_Toe
                         {
                             if (row[x] == player) value += 10;
                         }
+                        // NIE LICZYMY WARTOSCI PO SKOSIE
 
                         Tuple<int, int> place = new Tuple<int, int>(i, j);
                         RankingOfChoices.Add(place, value);

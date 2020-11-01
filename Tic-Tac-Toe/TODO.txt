@@ -2,6 +2,7 @@
 
 
 - game loop
+- NIE LICZYMY WARTOSCI PO SKOSIE ! !! 
 
 
 Tutaj wszystko co nam wpadnie do głowy, że trzeba zrobić
