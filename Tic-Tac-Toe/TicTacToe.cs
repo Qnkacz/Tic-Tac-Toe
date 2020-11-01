@@ -285,7 +285,11 @@ namespace Tic_Tac_Toe
                         {
                             if (row[x] == player) value += 10;
                         }
-                        // NIE LICZYMY WARTOSCI PO SKOSIE
+                        // Liczenie wartosci po skosie
+                        if (CountDiagonal(i, j))
+                        {
+
+                        }
 
                         Tuple<int, int> place = new Tuple<int, int>(i, j);
                         RankingOfChoices.Add(place, value);
@@ -303,6 +307,59 @@ namespace Tic_Tac_Toe
 
                 return RankingOfChoices.Keys.First();
             }
+        }
+
+        public bool CountDiagonal(int x, int y)
+        {
+            if (AreIndicesLegal(x, y))
+            {
+                throw new System.ArgumentException("Indices illegal");
+            }
+
+            // Dodajemy do listy wszystkie miejsca gdzie przekątna sie liczy
+            List<Tuple<int, int>> xxx = new List<Tuple<int, int>>();
+            xxx.Add(new Tuple<int, int>(0, 0));
+            xxx.Add(new Tuple<int, int>(1, 1));
+            xxx.Add(new Tuple<int, int>(2, 2));
+            xxx.Add(new Tuple<int, int>(0, 2));
+            xxx.Add(new Tuple<int, int>(2, 0));
+
+            // Punkt do zbadania
+            Tuple<int, int> point= new Tuple<int, int>(x, y);
+
+            // Jeżeli na punkt na liście przekątnych punktow -> true
+            if (xxx.Contains(point)) return true;
+
+            return false; // w przeciwym wypadku poza -> false
+        }
+
+        public List<Tuple<int, int>> getDiagonals(int x, int y)
+        {
+            if (AreIndicesLegal(x, y))
+            {
+                throw new System.ArgumentException("Indices illegal");
+            }
+
+            // Dodajemy do listy wszystkie miejsca gdzie przekątna sie liczy
+            List<Tuple<int, int>> xxx = new List<Tuple<int, int>>();
+            xxx.Add(new Tuple<int, int>(0, 0));
+            xxx.Add(new Tuple<int, int>(1, 1));
+            xxx.Add(new Tuple<int, int>(2, 2));
+            xxx.Add(new Tuple<int, int>(0, 2));
+            xxx.Add(new Tuple<int, int>(2, 0));
+
+            // Usuwamy punkt startowy z listy
+            xxx.Remove(new Tuple<int, int>(x, y));
+
+            // Zwracamy wszystkie punkty przekątne poza badanym
+            return xxx;
+        }
+
+        public bool AreIndicesLegal(int row, int col)
+        {
+            if (row >= 0 && row < 3 && col >= 0 && col < 3) return true;
+
+            return false;
         }
     }
 }
