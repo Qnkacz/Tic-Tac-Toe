@@ -79,7 +79,7 @@ namespace Tic_Tac_Toe
             }
             else
             {
-                Console.WriteLine("columnNumber is lower than 0 or higher than 2");
+                //Console.WriteLine("columnNumber is lower than 0 or higher than 2");
 
                 return new List<int>();
             }
@@ -98,7 +98,7 @@ namespace Tic_Tac_Toe
             }
             else
             {
-                Console.WriteLine("columnNumber is lower than 0 or higher than 2");
+                //Console.WriteLine("columnNumber is lower than 0 or higher than 2");
 
                 return new List<int>();
             }
@@ -232,49 +232,69 @@ namespace Tic_Tac_Toe
             {
                 if(board[i,0]==1&& board[i, 1]==1&&board[i, 2] == 1)
                 {
-                    //Console.WriteLine("Wygrał ");
-                    
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Wygral gracz");
+                    Console.ResetColor();
                     return 1;
                 }
                 else if(board[0,i]==1 && board[1,i]==1 && board[2, i] == 1)
                 {
-                    //Console.WriteLine("kolumny gracz");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Wygral gracz");
+                    Console.ResetColor();
                     return 1;
                 }
             }
             //skoksy
             if (board[0, 0] == 1 && board[1, 1] == 1 && board[2, 2] == 1)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Wygral gracz");
+                Console.ResetColor();
                 return 1;
             }
             if (board[0, 2] == 1 && board[1, 1] == 1 && board[2, 0] == 1)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Wygral gracz");
+                Console.ResetColor();
                 return 1;
             }
             for (int i = 0; i < 3; i++)
             {
                 if (board[i, 0] == 0 && board[i, 1] == 0 && board[i, 2] == 0)
                 {
-                    //Console.WriteLine("kolumny AI");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Wygrala sztuczna inteligencja");
+                    Console.ResetColor();
                     return 0;
                 }
                 else if (board[0, i] == 0 && board[1, i] == 0 && board[2, i] == 0)
                 {
-                    //Console.WriteLine("w AI");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Wygrala sztuczna inteligencja");
+                    Console.ResetColor();
                     return 0;
                 }
             }
             //skoksy
             if (board[0, 0] == 0 && board[1, 1] == 0 && board[2, 2] == 0)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Wygrala sztuczna inteligencja");
+                Console.ResetColor();
                 return 0;
             }
             if (board[0, 2] == 0 && board[1, 1] == 0 && board[2, 0] == 0)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Wygrala sztuczna inteligencja");
+                Console.ResetColor();
                 return 0;
             }
             return 2;
         }
+
         //oddaje tablice [x,y] z koordynatami na najlepszy ruch
         //musisz wprowadzic dla kogo jest liczone
         //1-dla gracza
