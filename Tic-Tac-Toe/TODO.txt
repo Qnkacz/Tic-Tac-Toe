@@ -1,8 +1,9 @@
 ﻿TODO LIST:
 
 
-- game loop
-- NIE LICZYMY WARTOSCI PO SKOSIE ! !! 
+- Po wygranej - podświetlenie wygrywającego układu
+
+
 
 
 Tutaj wszystko co nam wpadnie do głowy, że trzeba zrobić

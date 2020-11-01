@@ -52,7 +52,7 @@ namespace Tic_Tac_Toe
                             Console.ResetColor();
                             break;
                         case 0:
-                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.Write("O ");
                             Console.ResetColor();
                             break;
@@ -250,13 +250,18 @@ namespace Tic_Tac_Toe
             Console.WriteLine("Gracz: " + Human_Value);
             if (AI_Value >= 15)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Wygrala sztuczna inteligencja!");
+                Console.ResetColor();
                 
                 return 0;
             }
             else if (Human_Value >= 15)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Wygral gracz!");
+                Console.ResetColor();
+
                 return 1;
             }
             else
