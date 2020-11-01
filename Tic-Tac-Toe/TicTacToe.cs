@@ -47,10 +47,14 @@ namespace Tic_Tac_Toe
                             Console.Write("  ");
                             break;
                         case 1:
+                            Console.ForegroundColor = ConsoleColor.Red;
                             Console.Write("X ");
+                            Console.ResetColor();
                             break;
                         case 0:
+                            Console.ForegroundColor = ConsoleColor.Blue;
                             Console.Write("O ");
+                            Console.ResetColor();
                             break;
                         default:
                             throw new System.ArgumentException("Parameter other than [0,2]. ERROR!");
