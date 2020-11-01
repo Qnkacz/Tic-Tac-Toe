@@ -2,6 +2,7 @@
 
 
 - Po wygranej - podświetlenie wygrywającego układu
+- W trybie AIvsAI naprawic detale w interfejsie
 
 
 

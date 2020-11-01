@@ -69,7 +69,7 @@ namespace Tic_Tac_Toe
         {
             // GetColumn albo zwraca pustą listę -> zły input
             //           w przeciwnym wypadku zwraca listę wartości w kolumnie
-            if (columnNumber > 0 && columnNumber < 3)
+            if (columnNumber >= 0 && columnNumber < 3)
             {
                 int[] values = {    board[0,columnNumber],
                                     board[1,columnNumber],
@@ -88,7 +88,7 @@ namespace Tic_Tac_Toe
         {
             // GetRow albo zwraca pustą listę -> zły input
             //           w przeciwnym wypadku zwraca listę wartości w wierszu
-            if (rowNumber > 0 && rowNumber < 3)
+            if (rowNumber >= 0 && rowNumber < 3)
             {
                 int[] values = {    board[rowNumber,0],
                                     board[rowNumber,1],
@@ -111,7 +111,7 @@ namespace Tic_Tac_Toe
             // 2 - Brak wstawionego znaku
             // 0 - 0 - kółko
             // 1 - X - iks
-            if (row > 0 && row < 3 && column > 0 && column < 3)
+            if (row >= 0 && row < 3 && column >= 0 && column < 3)
             {
                 return board[row, column];
             }
@@ -129,7 +129,7 @@ namespace Tic_Tac_Toe
             // . - Brak wstawionego znaku
             // o - 0 - kółko
             // x - X - iks
-            if (row > 0 && row < 3 && column > 0 && column < 3)
+            if (row >= 0 && row < 3 && column >= 0 && column < 3)
             {
                 switch (board[row, column])
                 {
@@ -154,7 +154,7 @@ namespace Tic_Tac_Toe
         public void SetValue(int row, int column, int value)
         {
             int[] goodValues = new int[] { 0, 1 };
-            if (row < 0 && row > 3 && column < 0 && column > 3)
+            if (row < 0 && row >= 3 && column < 0 && column >= 3)
             {
                 Console.WriteLine("Impossible row or column.");
                 return;
@@ -172,7 +172,7 @@ namespace Tic_Tac_Toe
         public void SetChar(int row, int column, char c)
         {
             char[] goodValues = new char[] { 'o', 'x' };
-            if (row < 0 && row > 3 && column < 0 && column > 3)
+            if (row < 0 && row >= 3 && column < 0 && column >= 3)
             {
                 Console.WriteLine("Impossible row or column.");
                 return;
@@ -314,16 +314,63 @@ namespace Tic_Tac_Toe
                         var row = GetRow(i).ToArray();
                         var col = GetColumn(j).ToArray();
 
+                        if (row.Length != 3)
+                        {
+                            ThrowError("Zwrocona tablica rzędu była pusta.");
+                        }
+                        if (col.Length != 3)
+                        {
+                            ThrowError("Zwrocona tablica kolumny była pusta.");
+                        }
+
+                        int verticalEnemies = 0;
+                        int horizontalEnemies = 0;
+                        int verticalOurs = 0;
+                        int horizontalOurs = 0;
                         for (int x = 0; x < col.Length; x++) //dodajemy value w zaleznosci od kolumny
                         {
-                            if (col[x] == player) value += 10;
+                            if (col[x] == player)
+                            {
+                                value += 10;
+                                verticalOurs++;
+                            }
+                            if (col[x] == OpositeValue(player))
+                            {
+                                value -= 10;
+                                verticalEnemies++;
+                            }
                         }
                         for (int x = 0; x < row.Length; x++) //dodajemy value w zaleznosci od wiersza
                         {
-                            if (row[x] == player) value += 10;
+                            if (row[x] == player)
+                            {
+                                value += 10;
+                                horizontalOurs++;
+                            }
+                            if (row[x] == OpositeValue(player))
+                            {
+                                value -= 10;
+                                horizontalEnemies++;
+                            }
+                        }
+
+                        // Jeżeli w rzedzie są dwa znaki przeciwnika
+                        // Musimy tutaj postawić znak
+                        // W przeciwnym przypadku przeciwnik pokona nas w nastepnym ruchu
+                        if (horizontalEnemies > 1 || verticalEnemies > 1)
+                        {
+                            value += 100;
+                        }
+                        // BUT NOT FOR ME - MOVE
+                        // jezeli mamy dwa nasze znaki w rzedzie stawiamy kolejny i wygrywamy gre
+                        if (horizontalOurs > 1 || verticalOurs > 1)
+                        {
+                            value += 200;
                         }
 
                         // Liczenie wartosci po skosie
+                        int diagEnemies = 0;
+                        int diagOurs = 0;
                         if (CountDiagonal(i, j)) // sprawdzamy czy punkt lezy na przekątnych
                         {
                             // Otrzymujemy punkty do sprawdzenia zajęcia przez gracza
@@ -331,7 +378,27 @@ namespace Tic_Tac_Toe
                             foreach (Tuple<int, int> point in points)
                             {
                                 // Jeżeli zajete przez gracza dodajemy punkty
-                                if (board[point.Item1, point.Item2] == player) value += 10;
+                                if (board[point.Item1, point.Item2] == player)
+                                {
+                                    value += 10;
+                                    diagOurs++;
+                                }
+                                if (board[point.Item1, point.Item2] == OpositeValue(player))
+                                {
+                                    value -= 10;
+                                    diagEnemies++;
+                                }
+                            }
+                            // To samo co wyzej
+                            if (diagEnemies > 1 || diagEnemies > 1)
+                            {
+                                value += 100;
+                            }
+                            // BUT NOT FOR ME - MOVE
+                            // jezeli mamy dwa nasze znaki w rzedzie stawiamy kolejny i wygrywamy gre
+                            if (diagOurs > 1 || diagOurs > 1)
+                            {
+                                value += 200;
                             }
                         }
 
@@ -340,6 +407,7 @@ namespace Tic_Tac_Toe
                     }
                 }
             }
+            // To jest dobre. Nie przeszkadza mu wstawianie wartosci w rzedzie za przeciwnikiem. To przeciez nie dziala
             var sortedDict = RankingOfChoices.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
             RankingOfChoices = sortedDict;
             if (RankingOfChoices.Keys.Count == 0)
@@ -348,7 +416,7 @@ namespace Tic_Tac_Toe
             }
             else
             {
-                return RankingOfChoices.Keys.First();
+                return RankingOfChoices.Keys.Last();
             }
         }
 
@@ -403,13 +471,13 @@ namespace Tic_Tac_Toe
             // przekatna top right -> bottom left
             List<Tuple<int, int>> rightDiag = new List<Tuple<int, int>>();
             rightDiag.Add(new Tuple<int, int>(0, 2));
-            rightDiag.Add(new Tuple<int, int>(2, 2));
+            rightDiag.Add(new Tuple<int, int>(1, 1));
             rightDiag.Add(new Tuple<int, int>(2, 0));
 
             // Badany punkt w przestrzeni
             Tuple<int, int> examinedPoint = new Tuple<int, int>(x, y);
 
-            if (centerDiag.Contains(examinedPoint))
+            if (examinedPoint.Item1 == 1 && examinedPoint.Item2 == 1)
             {
                 centerDiag.Remove(examinedPoint);
                 return centerDiag;
@@ -435,6 +503,22 @@ namespace Tic_Tac_Toe
             if (row >= 0 && row < 3 && col >= 0 && col < 3) return true;
 
             return false;
+        }
+
+        private void ThrowError(string errorText = "Error not specified")
+        {
+            throw new System.ArgumentException(errorText);
+        }
+
+        private int OpositeValue(int val)
+        {
+            if (val < 0 && val > 1)
+            {
+                ThrowError("Bad value inserted");
+            }
+
+            if (val == 0) return 1;
+            else return 0;
         }
     }
 }

@@ -25,7 +25,6 @@ namespace Tic_Tac_Toe
         public GameManager(bool weFirst = true)
         {
             ourTurn = weFirst;
-            ShowWhoseTurn();
         }
 
         /// <summary>
@@ -41,7 +40,7 @@ namespace Tic_Tac_Toe
             int y = -1;
             do
             {
-                Console.WriteLine("Wpisz wartość wiersza, gdzie chcesz wstawić znak");
+                Console.Write("Wpisz numer wiersza: ");
                 //loop która gwarantuje żeby była wprowadzona liczba
                 do
                 {
@@ -57,12 +56,12 @@ namespace Tic_Tac_Toe
                         {
                             _val += key.KeyChar;
                             x = Convert.ToInt32(_val);
-                            Console.WriteLine(x);
+                            Console.Write(x);
                         }
                     }
                 }
                 while (x == -1);
-                Console.WriteLine("Wpisz wartość kolumny, gdzie chcesz wstawić znak");
+                Console.Write(" | Wpisz numer kolumny: ");
                 //powtarzamy dla wiersza
                 _val = string.Empty;
                 do
@@ -106,9 +105,7 @@ namespace Tic_Tac_Toe
                     break;
             }
         }
-        
 
-        ///TODO
         //gameloop
         public void Gameloop()
         {
@@ -119,7 +116,34 @@ namespace Tic_Tac_Toe
                     // Tura gracza
                     case true:
                         ShowWhoseTurn();
-                        //PlayerInput();
+                        PlayerInput();
+                        //AI_Turn(1);
+                        EndTurn();
+                        Display();
+                        break;
+
+                    // Tura AI
+                    case false:
+                        ShowWhoseTurn();
+                        AI_Turn();
+                        EndTurn();
+                        Display();
+                        break;
+                }
+                aiTurnCounter++;
+            }
+            while (board.IsPlaceAvaible() == true && board.ChechWhoWon() == 2);
+            // powtarzaj dopoki są wolne miejsca i nikt jeszcze nie wygrał
+        }
+        public void RobotWars()
+        {
+            do
+            {
+                switch (ourTurn)
+                {
+                    // Tura gracza
+                    case true:
+                        ShowWhoseTurn();
                         AI_Turn(1);
                         EndTurn();
                         Display();
@@ -133,10 +157,10 @@ namespace Tic_Tac_Toe
                         Display();
                         break;
                 }
+                aiTurnCounter++;
             }
             while (board.IsPlaceAvaible() == true && board.ChechWhoWon() == 2);
             // powtarzaj dopoki są wolne miejsca i nikt jeszcze nie wygrał
-            
         }
         //tutaj zaprogramowałem output AI
         public void AI_Turn(int sign = 0)
