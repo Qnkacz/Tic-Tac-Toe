@@ -8,9 +8,11 @@ namespace Tic_Tac_Toe
 {
     class GameManager
     {
-        int aiTurnCounter = 0;
+        int turnCounter = 0;
 
         private bool ourTurn = new bool();
+        private bool whoStartsBackup = new bool();
+        private bool AIvsAI = new bool();
         TicTacToe board = new TicTacToe();
         ConsoleKey[] possibleInputs = new ConsoleKey[]
         {
@@ -22,9 +24,14 @@ namespace Tic_Tac_Toe
                 ConsoleKey.NumPad3
         };
 
-        public GameManager(bool weFirst = true)
+        public GameManager(bool weFirst = true, bool RobotWars = false)
         {
-            ourTurn = weFirst;
+            Console.WindowWidth = 70;
+            Console.Title = "Kółko i krzyżyk | Bartosz Wąsik i Alan Hudela";
+            whoStartsBackup = weFirst;
+            ourTurn = whoStartsBackup;
+            
+            AIvsAI = RobotWars;
         }
 
         /// <summary>
@@ -97,17 +104,41 @@ namespace Tic_Tac_Toe
             switch (ourTurn)
             {
                 case true:
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
                     Console.WriteLine("TURA GRACZA");
+                    Console.ResetColor();
                     break;
 
                 case false:
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.WriteLine("TURA AI");
+                    Console.ResetColor();
                     break;
             }
         }
 
         //gameloop
-        public void Gameloop()
+        public void GameLoop()
+        {
+            do
+            {
+                if (AIvsAI)
+                {
+                    AIwar();
+                }
+                else
+                {
+                    HUMANvsAI();
+                }
+                //if (board.ChechWhoWon() != 2) HighlightWin( board.ChechWhoWon() );
+                turnCounter = 0;
+                ourTurn = whoStartsBackup;
+                board = new TicTacToe();
+                Console.WriteLine("Wciśnij enter, aby rozegrać kolejną partię.");
+
+            } while (Console.ReadKey().Key == ConsoleKey.Enter);
+        }
+        public void HUMANvsAI()
         {
             do
             {
@@ -117,7 +148,6 @@ namespace Tic_Tac_Toe
                     case true:
                         ShowWhoseTurn();
                         PlayerInput();
-                        //AI_Turn(1);
                         EndTurn();
                         Display();
                         break;
@@ -130,12 +160,12 @@ namespace Tic_Tac_Toe
                         Display();
                         break;
                 }
-                aiTurnCounter++;
+                turnCounter++;
             }
             while (board.IsPlaceAvaible() == true && board.ChechWhoWon() == 2);
             // powtarzaj dopoki są wolne miejsca i nikt jeszcze nie wygrał
         }
-        public void RobotWars()
+        public void AIwar()
         {
             do
             {
@@ -157,7 +187,7 @@ namespace Tic_Tac_Toe
                         Display();
                         break;
                 }
-                aiTurnCounter++;
+                turnCounter++;
             }
             while (board.IsPlaceAvaible() == true && board.ChechWhoWon() == 2);
             // powtarzaj dopoki są wolne miejsca i nikt jeszcze nie wygrał
@@ -165,10 +195,10 @@ namespace Tic_Tac_Toe
         //tutaj zaprogramowałem output AI
         public void AI_Turn(int sign = 0)
         {
-            if (aiTurnCounter == 0)
+            if (turnCounter == 0)
             {
                 FirstAITurn(sign);
-                aiTurnCounter++;
+                turnCounter++;
             }
             else
             {
@@ -206,6 +236,11 @@ namespace Tic_Tac_Toe
         private void EndTurn()
         {
             ourTurn = !ourTurn;
+        }
+
+        private void HighlightWin(int winner)
+        {
+            // Można dorobić podświetlanie ale to w sumie wiecej roboty niz myslalem wiec zostawiam blank
         }
     }
 }

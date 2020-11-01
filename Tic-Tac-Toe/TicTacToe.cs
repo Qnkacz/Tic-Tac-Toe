@@ -34,7 +34,7 @@ namespace Tic_Tac_Toe
         }
         public void Display() // Rysuje stan gry w konsoli
         {
-            string bars = "████████";
+            string bars = "███████";
             Console.WriteLine(bars);
             for (int i = 0; i < 3; i++)
             {
@@ -44,21 +44,22 @@ namespace Tic_Tac_Toe
                     switch (board[i, j])
                     {
                         case 2:
-                            Console.Write("  ");
+                            Console.Write(" ");
                             break;
                         case 1:
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write("X ");
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write("X");
                             Console.ResetColor();
                             break;
                         case 0:
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write("O ");
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("O");
                             Console.ResetColor();
                             break;
                         default:
                             throw new System.ArgumentException("Parameter other than [0,2]. ERROR!");
                     }
+                    if (j < 2) Console.Write(" ");
                 }
                 Console.WriteLine("█");
             }
@@ -208,7 +209,7 @@ namespace Tic_Tac_Toe
                 }
             }
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("nie ma miejsca na planszy");
+            Console.WriteLine("Brak wolnych miejsc. Remis.");
             Console.ResetColor();
             return false;
         }

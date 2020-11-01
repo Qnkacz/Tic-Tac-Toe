@@ -8,18 +8,9 @@ namespace Tic_Tac_Toe
         {
             bool HumanStart = true;
             bool AIvsAI = false;
-
-            Console.WriteLine("TIC TAC TOE\n");
-            if (!AIvsAI)
-            {
-                GameManager GM = new GameManager(HumanStart);
-                GM.Gameloop();
-            }
-            else
-            {
-                GameManager GM = new GameManager(HumanStart);
-                GM.RobotWars();
-            }
+            
+            GameManager GM = new GameManager(HumanStart, AIvsAI);
+            GM.GameLoop();
         }
     }
 }
