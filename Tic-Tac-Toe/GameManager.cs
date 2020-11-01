@@ -70,6 +70,9 @@ namespace Tic_Tac_Toe
                 //loop która gwarantuje żeby była wprowadzona liczba
                 do
                 {
+                    _val = string.Empty;
+                    x = -1;
+                    y = -1;
                     key = Console.ReadKey(true); //wprowadzamy klawisz
                     if (possibleInputs.Contains(key.Key)) //jezeli nie jest to backspace to działamy
                     {
