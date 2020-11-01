@@ -192,16 +192,18 @@ namespace Tic_Tac_Toe
         public bool IsPlaceAvaible()
         {
 
-            for (int i = 0; i < board.GetUpperBound(0); i++)
+            for (int i = 0; i < 3; i++)
             {
-                for (int j = 0; j < board.GetUpperBound(1); j++)
+                for (int j = 0; j < 3; j++)
                 {
                     if (board[i,j] == 2)
                     {
+                        //Console.WriteLine("i: "+i+" j: "+j+" value: "+board[i,j]);
                         return true;
                     }
                 }
             }
+            Console.WriteLine("nie ma miejsca na planszy");
             return false;
         }
         //sprawdzanie czy konkretne miejsce jest wolne

@@ -165,6 +165,7 @@ namespace Tic_Tac_Toe
             if (aiTurnCounter == 0)
             {
                 FirstAITurn();
+                aiTurnCounter++;
             }
             else
             {
