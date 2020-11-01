@@ -207,7 +207,9 @@ namespace Tic_Tac_Toe
                     }
                 }
             }
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("nie ma miejsca na planszy");
+            Console.ResetColor();
             return false;
         }
         //sprawdzanie czy konkretne miejsce jest wolne

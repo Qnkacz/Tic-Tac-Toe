@@ -119,7 +119,8 @@ namespace Tic_Tac_Toe
                     // Tura gracza
                     case true:
                         ShowWhoseTurn();
-                        PlayerInput();
+                        //PlayerInput();
+                        AI_Turn(1);
                         EndTurn();
                         Display();
                         break;
@@ -142,7 +143,7 @@ namespace Tic_Tac_Toe
         {
             if (aiTurnCounter == 0)
             {
-                FirstAITurn();
+                FirstAITurn(sign);
                 aiTurnCounter++;
             }
             else
@@ -150,11 +151,11 @@ namespace Tic_Tac_Toe
                var place = board.GetBestPlaceFor(sign); // zwraca indeksy tablicy
                 if (board.CanPlace(place.Item1, place.Item2))
                 {
-                    board.SetChar(place.Item1, place.Item2, 'o');
+                    board.SetValue(place.Item1, place.Item2, sign);
                 }
             }
         }
-        public void FirstAITurn()
+        public void FirstAITurn(int sign = 0)
         {
             Random r = new Random();
             List<Tuple<int, int>> listofAvaiblePlaces = new List<Tuple<int, int>>();
@@ -173,7 +174,7 @@ namespace Tic_Tac_Toe
             Tuple<int, int> thePlace = new Tuple<int, int>(listofAvaiblePlaces[randIndex].Item1, listofAvaiblePlaces[randIndex].Item2);
             if(board.CanPlace(thePlace.Item1, thePlace.Item2) == true)
             {
-                board.SetChar(thePlace.Item1, thePlace.Item2, 'o');
+                board.SetValue(thePlace.Item1, thePlace.Item2, sign);
             }
             
         }
