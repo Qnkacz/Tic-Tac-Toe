@@ -285,10 +285,17 @@ namespace Tic_Tac_Toe
                         {
                             if (row[x] == player) value += 10;
                         }
-                        // Liczenie wartosci po skosie
-                        if (CountDiagonal(i, j))
-                        {
 
+                        // Liczenie wartosci po skosie
+                        if (CountDiagonal(i, j)) // sprawdzamy czy punkt lezy na przekątnych
+                        {
+                            // Otrzymujemy punkty do sprawdzenia zajęcia przez gracza
+                            List<Tuple<int, int>> points = getDiagonals(i, j);
+                            foreach (Tuple<int, int> point in points)
+                            {
+                                // Jeżeli zajete przez gracza dodajemy punkty
+                                if (board[point.Item1, point.Item2] == player) value += 10;
+                            }
                         }
 
                         Tuple<int, int> place = new Tuple<int, int>(i, j);
@@ -311,7 +318,8 @@ namespace Tic_Tac_Toe
 
         public bool CountDiagonal(int x, int y)
         {
-            if (AreIndicesLegal(x, y))
+            // Jezeli nielegalne indeksy wysyp program
+            if (AreIndicesLegal(x, y) == false)
             {
                 throw new System.ArgumentException("Indices illegal");
             }
@@ -335,24 +343,55 @@ namespace Tic_Tac_Toe
 
         public List<Tuple<int, int>> getDiagonals(int x, int y)
         {
-            if (AreIndicesLegal(x, y))
+            if (AreIndicesLegal(x, y) == false)
             {
                 throw new System.ArgumentException("Indices illegal");
             }
 
-            // Dodajemy do listy wszystkie miejsca gdzie przekątna sie liczy
-            List<Tuple<int, int>> xxx = new List<Tuple<int, int>>();
-            xxx.Add(new Tuple<int, int>(0, 0));
-            xxx.Add(new Tuple<int, int>(1, 1));
-            xxx.Add(new Tuple<int, int>(2, 2));
-            xxx.Add(new Tuple<int, int>(0, 2));
-            xxx.Add(new Tuple<int, int>(2, 0));
+            // Tworzymy listy możliwych przypadkow
 
-            // Usuwamy punkt startowy z listy
-            xxx.Remove(new Tuple<int, int>(x, y));
+            // punkt srodkowy. potrzeba obu przekatnych
+            List<Tuple<int, int>> centerDiag = new List<Tuple<int, int>>();
+            centerDiag.Add(new Tuple<int, int>(0, 0));
+            centerDiag.Add(new Tuple<int, int>(1, 1));
+            centerDiag.Add(new Tuple<int, int>(2, 2));
+            centerDiag.Add(new Tuple<int, int>(0, 2));
+            centerDiag.Add(new Tuple<int, int>(2, 0));
 
-            // Zwracamy wszystkie punkty przekątne poza badanym
-            return xxx;
+            // przekątna top left -> bottom right
+            List<Tuple<int, int>> leftDiag = new List<Tuple<int, int>>();
+            leftDiag.Add(new Tuple<int, int>(0, 0));
+            leftDiag.Add(new Tuple<int, int>(1, 1));
+            leftDiag.Add(new Tuple<int, int>(2, 2));
+
+            // przekatna top right -> bottom left
+            List<Tuple<int, int>> rightDiag = new List<Tuple<int, int>>();
+            rightDiag.Add(new Tuple<int, int>(0, 2));
+            rightDiag.Add(new Tuple<int, int>(2, 2));
+            rightDiag.Add(new Tuple<int, int>(2, 0));
+
+            // Badany punkt w przestrzeni
+            Tuple<int, int> examinedPoint = new Tuple<int, int>(x, y);
+
+            if (centerDiag.Contains(examinedPoint))
+            {
+                centerDiag.Remove(examinedPoint);
+                return centerDiag;
+            }
+            else if (leftDiag.Contains(examinedPoint))
+            {
+                leftDiag.Remove(examinedPoint);
+                return leftDiag;
+            }
+            else if (rightDiag.Contains(examinedPoint))
+            {
+                rightDiag.Remove(examinedPoint);
+                return rightDiag;
+            }
+            else
+            {
+                throw new System.ArgumentException("Diagonals returning error");
+            }
         }
 
         public bool AreIndicesLegal(int row, int col)
