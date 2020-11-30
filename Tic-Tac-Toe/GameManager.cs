@@ -28,6 +28,7 @@ namespace Tic_Tac_Toe
         {
             Console.WindowWidth = 70;
             Console.Title = "Kółko i krzyżyk | Bartosz Wąsik i Alan Hudela";
+            Display();
             whoStartsBackup = weFirst;
             ourTurn = whoStartsBackup;
             

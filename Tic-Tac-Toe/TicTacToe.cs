@@ -413,7 +413,7 @@ namespace Tic_Tac_Toe
             RankingOfChoices = sortedDict;
             if (RankingOfChoices.Keys.Count == 0)
             {
-                throw new SystemException("Nie znalazłem najlepszego ruchu, wyjebałem się");
+                throw new SystemException("Nie znalazłem najlepszego ruchu.");
             }
             else
             {
